@@ -213,6 +213,8 @@ Other pages:
 
 ![Orders page](./img/Old-orders.jpg)
 
+![Order Draft](./img/order-draft.jpg)
+
 ## Users Credentials
 
 - `pooya@good.com`, password `1234`, TOTP enabled
