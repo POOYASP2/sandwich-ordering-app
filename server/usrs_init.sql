@@ -1,0 +1,20 @@
+BEGIN TRANSACTION;
+
+CREATE TABLE IF NOT EXISTS "users" (
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "email" TEXT UNIQUE NOT NULL,
+    "name" TEXT NOT NULL,
+    "hash" TEXT NOT NULL,
+    "salt" TEXT NOT NULL,
+    "secret" TEXT,
+    "lastTotpStep" INTEGER DEFAULT 0,
+    "balance" REAL DEFAULT 100.0
+);
+
+INSERT INTO "users" VALUES (1, 'pooya@good.com', 'Pooya sharifi', '3b9621f003f921ead42a3d4c8c0250baca0e416782401800711b33a1cbc9ca8b', '72e4eeb14def3b21', 'LXBSMDTMSP2I5XFXIYRGFVWSFI', 0, 100.0);
+INSERT INTO "users" VALUES (2, 'sina@d.com', 'Sina Sharifi', 'f315823836975642013d537403cf54ac320cee36c594771a9321b52d72acc9c1', 'a8b618c717683608', 'LXBSMDTMSP2I5XFXIYRGFVWSFI', 0, 100.0);
+
+INSERT INTO "users" VALUES (3, 'peyman@s.com', 'Pyeman Shamsi', '06b33b625e6be7e8b5363d45f2c760730595a91f27b32a0d089ed596e9ccb904', 'e818f0647b4e1fe0', NULL, 0, 100.0);
+INSERT INTO "users" VALUES (4, 'nastaran@test.com', 'Nastran mousavi', '3b9621f003f921ead42a3d4c8c0250baca0e416782401800711b33a1cbc9ca8b', '72e4eeb14def3b21', NULL, 0, 100.0);
+
+COMMIT;
