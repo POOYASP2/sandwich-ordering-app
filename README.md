@@ -1,5 +1,7 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/gRhWiR3Q)
+
 # Exam #2: "Sandwich"
+
 ## Student: s355130 SHARIFI POOYA
 
 ## React Client Application Routes
@@ -26,7 +28,7 @@
 }
 ```
 
-- GET `/api/orders`  (Authenticated)
+- GET `/api/orders` (Authenticated)
   - response body: list of confirmed orders of the authenticated user, including ids needed to duplicate an order into a draft cart. Example:
 
 ```
@@ -59,7 +61,7 @@
 ]
 ```
 
-- POST `/api/orders`  (Authenticated)
+- POST `/api/orders` (Authenticated)
   - request body: list of sandwiches to be ordered:
 
 ```
@@ -77,15 +79,13 @@
 }
 ```
 
-  - response body: ok `{ "id": 7, "totalPrice": 5 }` or not: `{ "errors": [...] }`
+- response body: ok `{ "id": 7, "totalPrice": 5 }` or not: `{ "errors": [...] }`
 
-- DELETE `/api/orders/:id`  (Authenticated + TOTP)
+- DELETE `/api/orders/:id` (Authenticated + TOTP)
   - response body: ok `{ "refund": 18 }` or not: `{ "error": "..." }`
   - only the owner of the order can delete it
   - the user must have TOTP enabled and must have completed TOTP authentication
   - restores sandwich availability and refunds 90% of the amount paid
-
-
 
 * POST `/api/sessions`
 * Description: Create a new session starting from given credentials.
@@ -98,8 +98,8 @@
 }
 ```
 
-* Response: `200 OK` (success) or `401 Unauthorized` (wrong credentials) or `500 Internal Server Error` (generic error).
-* Response body: An object with user information
+- Response: `200 OK` (success) or `401 Unauthorized` (wrong credentials) or `500 Internal Server Error` (generic error).
+- Response body: An object with user information
 
 ```
 {
@@ -114,9 +114,9 @@
 
 ### Second factor authentication
 
-* POST `/api/login-totp`
-* Description: Complete TOTP authentication for a user already logged in with username and password.
-* Request body: An object with the TOTP code
+- POST `/api/login-totp`
+- Description: Complete TOTP authentication for a user already logged in with username and password.
+- Request body: An object with the TOTP code
 
 ```
 {
@@ -124,8 +124,8 @@
 }
 ```
 
-* Response: `200 OK` (success) or `401 Unauthorized` (wrong/replayed TOTP) or `400 Bad Request` (TOTP not enabled).
-* Response body:
+- Response: `200 OK` (success) or `401 Unauthorized` (wrong/replayed TOTP) or `400 Bad Request` (TOTP not enabled).
+- Response body:
 
 ```
 {
@@ -135,11 +135,11 @@
 
 ### Get the current session if existing
 
-* GET `/api/sessions/current`
-* Description: Verify if the given session is still valid and return the info about the logged-in user. A cookie with a VALID SESSION ID must be provided to get the info of the user authenticated in the current session.
-* Request body: _None_
-* Response: `200 OK` (success) or `401 Unauthorized` (error).
-* Response body: An object with user information
+- GET `/api/sessions/current`
+- Description: Verify if the given session is still valid and return the info about the logged-in user. A cookie with a VALID SESSION ID must be provided to get the info of the user authenticated in the current session.
+- Request body: _None_
+- Response: `200 OK` (success) or `401 Unauthorized` (error).
+- Response body: An object with user information
 
 ```
 {
@@ -154,38 +154,40 @@
 
 ### Destroy the current session (logout)
 
-* DELETE `/api/sessions/current`
-* Description: Delete the current session. A cookie with a VALID SESSION ID must be provided.
-* Request body: _None_
-* Response: `200 OK` (success).
-* Response body: `{}`
+- DELETE `/api/sessions/current`
+- Description: Delete the current session. A cookie with a VALID SESSION ID must be provided.
+- Request body: _None_
+- Response: `200 OK` (success).
+- Response body: `{}`
 
 ## Database Tables
 
-- Table `users` - id, email, name, hash, salt, secret, lastTotpStep, balance
-- Table `sandwich_sizes` - id, name, price, dailyLimit, includedIngredients, maxDressings
-- Table `main_ingredients` - id, name
-- Table `breads` - id, name
-- Table `optional_ingredients` - id, name
-- Table `dressings` - id, name
-- Table `orders` - id, userId, totalPrice, status
-- Table `order_sandwiches` - id, orderId, sizeId, mainIngredientId, breadId, quantity, unitPrice
-- Table `order_sandwich_ingredients` - sandwichId, ingredientId
-- Table `order_sandwich_dressings` - sandwichId, dressingId
+- Table `users` - registered users, with hashed+salted password, per-user TOTP secret and credit: id, email, name, hash, salt, secret, lastTotpStep, balance
+- Table `sandwich_sizes` - the three sizes with price, daily limit and per-size rules: id ('S'/'M'/'L'), name, price, dailyLimit, includedIngredients, maxDressings
+- Table `main_ingredients` - available main ingredients: id, name
+- Table `breads` - available bread types: id, name
+- Table `optional_ingredients` - available optional ingredients: id, name
+- Table `dressings` - available dressings: id, name
+- Table `orders` - one row per order of a user: id, userId, totalPrice, status ('confirmed'/'cancelled')
+- Table `order_sandwiches` - one row per configured sandwich in an order: id, orderId, sizeId, mainIngredientId, breadId, quantity, unitPrice
+- Table `order_sandwich_ingredients` - optional ingredients of each ordered sandwich (many-to-many): sandwichId, ingredientId
+- Table `order_sandwich_dressings` - dressings of each ordered sandwich (many-to-many): sandwichId, dressingId
 
 ## Main React Components
 
 **Context** (`contexts.js`): `AuthContext` (login state, user, auth handlers) and `CartContext` (cart items, cart update handler) — provided in `App`, consumed by pages and layout.
 
 **Pages** (in `pages/`):
+
 - `LoginPage`: routing logic between `LoginForm`, `TotpForm`, and redirect based on auth state
 - `SandwichOptionsPage`: public page listing all sandwich sizes, prices, and available ingredients
 - `SandwichConfiguratorPage`: sandwich builder form, editable cart with discount display, and order submission
 - `OrdersPage`: confirmed user orders list with duplicate-to-cart and TOTP-guarded delete actions
 
 **Components** (in `components/`):
-- `GenericLayout`: navbar with user name, balance, 2FA badge, and logout button
-- `LoginForm`: email/password form with inline error
+
+- `GenericLayout`: navbar with user name, balance, 2FA badge, "Complete 2FA" shortcut, and logout button
+- `LoginForm`: email/password form with inline error, pre-filled with a default user
 - `TotpForm`: 6-digit TOTP code form with inline error and skip option
 - `CartTable`: draft order table with quantity controls, edit/remove actions, subtotal, 20% discount display, and confirm button
 - `OrderTable`: single order card with sandwiches breakdown, duplicate and delete buttons
