@@ -35,7 +35,7 @@ export function GenericLayout(props) {
                   <Badge bg='secondary'>{user.balance.toFixed(2)} euro</Badge>{' '}
                   {isTotpAuthenticated ? <Badge bg='success'>2FA</Badge> : null}
                 </Navbar.Text>
-                {user.canDoTotp && !isTotpAuthenticated ? (
+                {!isTotpAuthenticated ? (
                   <Button
                     as={Link}
                     to='/login'

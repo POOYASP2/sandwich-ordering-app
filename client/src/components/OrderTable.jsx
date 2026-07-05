@@ -11,7 +11,6 @@ import {
 function OrderTable(props) {
   const {
     order,
-    canDoTotp,
     isTotpAuthenticated,
     deletingOrderId,
     onDeleteOrder,
@@ -33,7 +32,7 @@ function OrderTable(props) {
               Duplicate
             </Button>
           ) : null}
-          {canDoTotp && order.status === 'confirmed' ? (
+          {order.status === 'confirmed' ? (
             <Button
               variant='danger'
               size='sm'

@@ -6,9 +6,8 @@ import { OrderTable } from '../components/OrderTable.jsx';
 import { AuthContext, CartContext } from '../contexts.js';
 
 function OrdersPage() {
-  const { isTotpAuthenticated, user, handleRefreshUser, handleLogout } = useContext(AuthContext);
+  const { isTotpAuthenticated, handleRefreshUser, handleLogout } = useContext(AuthContext);
   const { handleCartChange } = useContext(CartContext);
-  const canDoTotp = user?.canDoTotp;
   const navigate = useNavigate();
   const [isWaiting, setIsWaiting] = useState(true);
   const [deletingOrderId, setDeletingOrderId] = useState(null);
@@ -121,7 +120,6 @@ function OrdersPage() {
         <OrderTable
           key={order.id}
           order={order}
-          canDoTotp={canDoTotp}
           isTotpAuthenticated={isTotpAuthenticated}
           deletingOrderId={deletingOrderId}
           onDeleteOrder={handleDeleteOrder}

@@ -107,7 +107,6 @@
   "username": "pooya@good.com",
   "name": "Pooya sharifi",
   "balance": 100,
-  "canDoTotp": true,
   "isTotp": false
 }
 ```
@@ -147,7 +146,6 @@
   "username": "pooya@good.com",
   "name": "Pooya sharifi",
   "balance": 100,
-  "canDoTotp": true,
   "isTotp": true
 }
 ```
@@ -217,7 +215,7 @@ Other pages:
 
 ## Users Credentials
 
-- `pooya@good.com`, password `1234`, TOTP enabled
-- `sina@d.com`, password `1234`, TOTP enabled
-- `peyman@s.com`, password `1234`, TOTP not enabled
-- `nastaran@test.com`, password `1234`, TOTP not enabled
+- `pooya@good.com`, password `1234`
+- `sina@d.com`, password `1234`
+- `peyman@s.com`, password `1234`
+- `nastaran@test.com`, password `1234`

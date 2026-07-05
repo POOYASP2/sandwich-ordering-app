@@ -50,7 +50,6 @@ async function clientUserInfo(req) {
     username: user.username,
     name: user.name,
     balance: user.balance,
-    canDoTotp: !!user.secret,
     isTotp: req.session.method === 'totp',
   };
 }
