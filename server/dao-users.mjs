@@ -48,7 +48,7 @@ const updateLastTotpStep = async (userId, lastTotpStep) => {
 
 // This function returns the user's public information.
 const getUserById = async (userId) => {
-  const sql = 'SELECT id, email, name, secret, balance FROM users WHERE id=?';
+  const sql = 'SELECT id, email, name, balance FROM users WHERE id=?';
   const row = await dbGetAsync(db, sql, [userId]);
 
   if (row === undefined) {
@@ -58,7 +58,6 @@ const getUserById = async (userId) => {
       id: row.id,
       username: row.email,
       name: row.name,
-      secret: row.secret,
       balance: row.balance,
     };
   }
