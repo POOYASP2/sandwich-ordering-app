@@ -114,17 +114,20 @@ router.post('/orders', isLoggedIn,
 );
 
 // DELETE /api/orders/:id
-router.delete('/orders/:id', isLoggedIn, isTotpDone, async (req, res) => {
-  try {
-    const result = await sandwichDao.cancelOrder(req.user.id, req.params.id);
-    if (result.error)
-      return res.status(404).json({ error: result.error });
-    res.status(200).json(result);
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ error: 'Database error' });
+router.delete('/orders/:id', isLoggedIn, isTotpDone,
+  [ check('id').isInt({min: 1}) ],
+  async (req, res) => {
+    try {
+      const result = await sandwichDao.cancelOrder(req.user.id, req.params.id);
+      if (result.error)
+        return res.status(404).json({ error: result.error });
+      res.status(200).json(result);
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: 'Database error' });
+    }
   }
-});
+);
 
 /*** Users APIs ***/
 
