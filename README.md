@@ -160,16 +160,26 @@
 
 ## Database Tables
 
-- Table `users` - registered users, with hashed+salted password, per-user TOTP secret and credit: id, email, name, hash, salt, secret, lastTotpStep, balance
-- Table `sandwich_sizes` - the three sizes with price, daily limit and per-size rules: id ('S'/'M'/'L'), name, price, dailyLimit, includedIngredients, maxDressings
-- Table `main_ingredients` - available main ingredients: id, name
-- Table `breads` - available bread types: id, name
-- Table `optional_ingredients` - available optional ingredients: id, name
-- Table `dressings` - available dressings: id, name
-- Table `orders` - one row per order of a user: id, userId, totalPrice, status ('confirmed'/'cancelled')
-- Table `order_sandwiches` - one row per configured sandwich in an order: id, orderId, sizeId, mainIngredientId, breadId, quantity, unitPrice
-- Table `order_sandwich_ingredients` - optional ingredients of each ordered sandwich (many-to-many): sandwichId, ingredientId
-- Table `order_sandwich_dressings` - dressings of each ordered sandwich (many-to-many): sandwichId, dressingId
+- Table `users` - registered users, with hashed+salted password, per-user TOTP secret and credit
+  - id, email, name, hash, salt, secret, lastTotpStep, balance
+- Table `sandwich_sizes` - the three sizes with price, daily limit and per-size rules
+  - id ('S'/'M'/'L'), name, price, dailyLimit, includedIngredients, maxDressings
+- Table `main_ingredients` - available main ingredients
+  - id, name
+- Table `breads` - available bread types
+  - id, name
+- Table `optional_ingredients` - available optional ingredients
+  - id, name
+- Table `dressings` - available dressings
+  - id, name
+- Table `orders` - one row per order of a user
+  - id, userId, totalPrice, status ('confirmed'/'cancelled')
+- Table `order_sandwiches` - one row per configured sandwich in an order
+  - id, orderId, sizeId, mainIngredientId, breadId, quantity, unitPrice
+- Table `order_sandwich_ingredients` - optional ingredients of each ordered sandwich (many-to-many)
+  - sandwichId, ingredientId
+- Table `order_sandwich_dressings` - dressings of each ordered sandwich (many-to-many)
+  - sandwichId, dressingId
 
 ## Main React Components
 
