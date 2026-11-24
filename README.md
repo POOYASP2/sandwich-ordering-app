@@ -1,17 +1,83 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/gRhWiR3Q)
+# Sandwich Ordering App
 
-# Exam #2: "Sandwich"
+A full-stack web app for ordering custom sandwiches from a restaurant. Customers browse the menu, build sandwiches, manage a cart and place orders paid from their account credit. Deleting an order requires two-factor authentication.
 
-## Student: s355130 SHARIFI POOYA
+Built with **React 19 + Vite** on the client, **Node.js + Express 5** on the server, and **SQLite** for storage. Developed as the final project of the *Web Applications* course at Politecnico di Torino (grade **30/30**).
 
-## React Client Application Routes
+![Order creation page](./img/orders-page.jpg)
 
-- Route `/`: list of sandwich sizes, prices, availability and all ingredients
-- Route `/login`: login with credentials / TOTP
-- Route `/order/new`: sandwich configuration and cart confirmation, for logged-in users
-- Route `/orders`: list of user's orders, with duplicate and delete actions
+## Features
 
-## API Server
+- **Public menu:** sandwich sizes, prices, today's remaining availability, and every ingredient, bread and dressing.
+- **Sandwich configurator:** choose size, bread, main ingredient, optional ingredients and dressings, within the rules of each size.
+- **Cart:** edit quantities, remove items, and get a 20% discount on 4 or more sandwiches.
+- **Orders:** checked on the server against daily availability and the user's credit, then saved in one request.
+- **Order history:** duplicate a past order into a new cart, or cancel it for a 90% refund. Cancelling restores availability.
+- **Authentication:** session login with scrypt-hashed, salted passwords (Passport.js).
+- **Two-factor authentication (TOTP):** required to cancel an order, with protection against reusing the same code.
+- **Validation:** every API input is validated with express-validator; the server never trusts prices or limits sent by the client.
+
+## Tech stack
+
+| Layer | Technologies |
+|---|---|
+| Client | React 19, React Router 7, React Bootstrap, Vite |
+| Server | Node.js, Express 5, Passport.js (local strategy), express-session, express-validator, otpauth |
+| Database | SQLite |
+
+## Getting started
+
+Requires Node.js 20 or newer.
+
+```bash
+# 1. Start the API server (http://localhost:3001)
+cd server
+npm install
+npm start
+
+# 2. In another terminal, start the client (http://localhost:5173)
+cd client
+npm install
+npm run dev
+```
+
+Optional environment variables for the server:
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `SESSION_SECRET` | a development-only value | Secret used to sign session cookies. Set your own outside local development. |
+| `PORT` | `3001` | Port of the API server |
+
+The SQLite database (`server/sandwich.db`) comes pre-filled with demo data. The `*_init.sql` files in `server/` recreate it from scratch.
+
+### Demo accounts
+
+All demo accounts use the password `1234`:
+
+- `pooya@good.com`
+- `sina@d.com`
+- `peyman@s.com`
+- `nastaran@test.com`
+
+To try two-factor authentication, add this demo TOTP secret to an authenticator app: `LXBSMDTMSP2I5XFXIYRGFVWSFI`.
+
+## Project structure
+
+```
+client/   React app: pages/, components/, API.js (calls to the server), contexts.js
+server/   Express API: index.mjs (setup), api.mjs (routes), dao-*.mjs (database access)
+img/      Screenshots
+```
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Home page](./img/main-page.jpg) | ![Login page](./img/login-page.jpg) |
+| ![TOTP page](./img/TOTP.jpg) | ![Order draft](./img/order-draft.jpg) |
+| ![Orders page](./img/Old-orders.jpg) | ![Home page, logged out](./img/main-page-without-login.jpg) |
+
+## API reference
 
 - GET `/api/sandwich-options`
   - response body: list of sandwich sizes with current availability, main ingredients, breads, optional ingredients and dressings. Example:
@@ -201,31 +267,7 @@
 - `OrderTable`: single order card with sandwiches breakdown, duplicate and delete buttons
 - `OptionList`: read-only list of sandwich options for the public page
 
-(only _main_ components, minor ones may be skipped)
 
-## Screenshot
+## Author
 
-Order creation page:
-
-![Order creation page](./img/orders-page.jpg)
-
-Other pages:
-
-![Home page (not logged in)](./img/main-page-without-login.jpg)
-
-![Home page (logged in)](./img/main-page.jpg)
-
-![Login page](./img/login-page.jpg)
-
-![TOTP page](./img/TOTP.jpg)
-
-![Orders page](./img/Old-orders.jpg)
-
-![Order Draft](./img/order-draft.jpg)
-
-## Users Credentials
-
-- `pooya@good.com`, password `1234`
-- `sina@d.com`, password `1234`
-- `peyman@s.com`, password `1234`
-- `nastaran@test.com`, password `1234`
+Pooya Sharifi · [GitHub](https://github.com/POOYASP2) · [LinkedIn](https://www.linkedin.com/in/pooya-sharifi/)

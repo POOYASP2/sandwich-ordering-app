@@ -63,7 +63,7 @@ app.use(passport.authenticate('session'));
 app.use('/api', apiRoutes);
 
 // Activating the server
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, (err) => {
   if (err) console.log(err);
   else console.log(`Server listening at http://localhost:${PORT}`);
