@@ -267,7 +267,3 @@ img/      Screenshots
 - `OrderTable`: single order card with sandwiches breakdown, duplicate and delete buttons
 - `OptionList`: read-only list of sandwich options for the public page
 
-
-## Author
-
-Pooya Sharifi · [GitHub](https://github.com/POOYASP2) · [LinkedIn](https://www.linkedin.com/in/pooya-sharifi/)
